@@ -30,7 +30,7 @@ FlexseaDeviceSpec fx_none_spec = {
 // FX_RIGID spec starts here
 // -------------------------
 
-#if(defined BOARD_TYPE_FLEXSEA_MANAGE  && defined BOARD_SUBTYPE_RIGID )
+#if(defined BOARD_TYPE_FLEXSEA_MANAGE  && defined BOARD_SUBTYPE_RIGID || defined BOARD_TYPE_FLEXSEA_PLAN)
 
 #ifdef DEPHY
 #define _rigid_numFields 36
@@ -111,7 +111,7 @@ FlexseaDeviceSpec fx_rigid_spec = {
 // FX_RIGID spec ends here
 #endif // BOARD_TYPE_FLEXSEA_MANAGE
 
-#ifdef BOARD_TYPE_FLEXSEA_EXECUTE
+#if ( defined BOARD_TYPE_FLEXSEA_EXECUTE || defined BOARD_TYPE_FLEXSEA_PLAN)
 	
 // FX_EXECUTE spec starts here
 // -------------------------
@@ -136,7 +136,7 @@ FlexseaDeviceSpec fx_execute_spec = {
 // FX_MANAGE spec starts here
 // -------------------------
 
-#if( defined BOARD_TYPE_FLEXSEA_MANAGE && !(defined BOARD_SUBTYPE_RIGID) )
+#if( defined BOARD_TYPE_FLEXSEA_MANAGE && !(defined BOARD_SUBTYPE_RIGID) || defined BOARD_TYPE_FLEXSEA_PLAN )
 	
 #define _manage_numFields 4									// type				
 #define	_dev_numFields _manage_numFields
