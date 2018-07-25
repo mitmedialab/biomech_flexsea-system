@@ -40,6 +40,7 @@ extern "C" {
 #include "flexsea_board.h"
 #include <string.h>
 #include "flexsea_comm_def.h"
+#include <ui.h>
 
 #define IS_FIELD_HIGH(i, map) ( (map)[(i)/32] & (1U << ((i)%32)) )
 #define SET_MAP_HIGH(i, map) ( (map)[(i)/32] |= (1U << ((i)%32)) )
