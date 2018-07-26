@@ -205,6 +205,7 @@ typedef enum {
 #define KNEE		0
 #define ANKLE_DP	1
 #define ANKLE_IE	2
+#define NUM_DOFS	3
 
 //In Control combined fields:
 #define IN_CONTROL_CONTROLLER(x)		((x & 0xE000) >> 13)
