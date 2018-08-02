@@ -106,6 +106,7 @@ extern "C" {
 #define CMD_USER3				102
 #define CMD_USER4				103
 #define CMD_USER5				104
+#define CMD_BIOMECH				105
 //(feel free to expand and/or redefine in flexsea-user, as long as it stays in
 // the 100-127 range)
 
