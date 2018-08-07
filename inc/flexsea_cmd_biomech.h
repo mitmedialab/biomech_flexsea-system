@@ -42,6 +42,8 @@ extern "C" {
  * CMD_BIOMECH == 105
  * */
 
+#define INT_SCALING 100
+
 /* Initializes part of the array of function pointers which determines which
 	function to call upon receiving a message
 */
@@ -55,7 +57,7 @@ void init_flexsea_payload_ptr_biomech(void);
 */
 
 void tx_cmd_biomech_r(uint8_t *shBuf, uint8_t *cmd, uint8_t *cmdType, \
-						uint16_t *len, uint8_t subcmd);
+						uint16_t *len, uint8_t subcmd, Act_s* act);
 
 /* Called by master to send a message to the slave, attempting to initiate a write, using a bitmap to specify which fields to read.
  * Current implementation allows for 3 * 32 = 96 readable fields, using 96 / 8 = 12 bytes.

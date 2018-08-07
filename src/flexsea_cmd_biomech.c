@@ -67,13 +67,14 @@ void init_flexsea_payload_ptr_biomech(void) {
 */
 
 void tx_cmd_biomech_r(uint8_t *shBuf, uint8_t *cmd, uint8_t *cmdType, \
-						uint16_t *len, uint8_t subcmd) {
+						uint16_t *len, uint8_t subcmd, Act_s* act) {
 
 	uint16_t index = 0;
 	(*cmd) = CMD_BIOMECH;
 	(*cmdType) = CMD_READ;
 
 	shBuf[index++] = subcmd; //replace this with biomech subflags
+	SPLIT_16((int16_t) (act->tauDes*INT_SCALING), shBuf, &index);
 
 	(*len) = index;
 }
@@ -99,7 +100,7 @@ void tx_cmd_biomech_w(uint8_t *shBuf, uint8_t *cmd, uint8_t *cmdType, \
 		SPLIT_32(flags[i++], shBuf, &index);
 
 	shBuf[index++] = subcmd;
-	SPLIT_16((int16_t) (act->tauDes*100), shBuf, &index);
+	SPLIT_16((int16_t) (act->tauDes*INT_SCALING), shBuf, &index);
 
 	(*len) = index;
 }
@@ -112,19 +113,26 @@ void tx_cmd_biomech_w(uint8_t *shBuf, uint8_t *cmd, uint8_t *cmdType, \
 */
 void rx_cmd_biomech_r(uint8_t *msgBuf, MultiPacketInfo *info, uint8_t *responseBuf, uint16_t* responseLen) {
 
-	uint8_t subcmd = msgBuf[0];
+	uint16_t index = 0;
+	uint8_t subcmd = msgBuf[index++];
+	uint16_t rawTau = REBUILD_UINT16(msgBuf, &index);
+
+	act1.tauDes = (*(int16_t*) &rawTau)/INT_SCALING.;
+
+	//set motors off by default
+	act1.motorOnFlag = 0;
+	act1.commandTimer = 0;
 
 	switch (subcmd) {
 		case 0:
+			break;
+		case 1:
+			act1.motorOnFlag = 1;
 			break;
 		//more cases add here
 		default:
 			break;
 	}
-
-	//set motors off (just reading)
-	act1.motorOnFlag = 0;
-	act1.commandTimer = 0;
 
 	tx_cmd_biomech_rr(responseBuf, responseLen, subcmd);
 
@@ -169,7 +177,7 @@ void rx_cmd_biomech_w(uint8_t *msgBuf, MultiPacketInfo *info, uint8_t *responseB
 
  	uint8_t subcmd = msgBuf[index++];
  	uint16_t rawTau = REBUILD_UINT16(msgBuf, &index);
- 	act1.tauDes = (*(int16_t*) &rawTau)/100.;
+ 	act1.tauDes = (*(int16_t*) &rawTau)/INT_SCALING.;
 
 	act1.motorOnFlag = 1; //turn motor flag on or off. This is flipped to 0 in safetyLimit() if comms drop.
 	act1.commandTimer = 0;
