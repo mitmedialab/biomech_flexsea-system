@@ -117,7 +117,7 @@ void rx_cmd_biomech_r(uint8_t *msgBuf, MultiPacketInfo *info, uint8_t *responseB
 	uint8_t subcmd = msgBuf[index++];
 	uint16_t rawTau = REBUILD_UINT16(msgBuf, &index);
 
-	act1.tauDes = (*(int16_t*) &rawTau)/INT_SCALING.;
+	act1.tauDes = (*(int16_t*) &rawTau)/INT_SCALING;
 
 	//set motors off by default
 	act1.motorOnFlag = 0;
@@ -177,7 +177,7 @@ void rx_cmd_biomech_w(uint8_t *msgBuf, MultiPacketInfo *info, uint8_t *responseB
 
  	uint8_t subcmd = msgBuf[index++];
  	uint16_t rawTau = REBUILD_UINT16(msgBuf, &index);
- 	act1.tauDes = (*(int16_t*) &rawTau)/INT_SCALING.;
+ 	act1.tauDes = (*(int16_t*) &rawTau)/INT_SCALING;
 
 	act1.motorOnFlag = 1; //turn motor flag on or off. This is flipped to 0 in safetyLimit() if comms drop.
 	act1.commandTimer = 0;
