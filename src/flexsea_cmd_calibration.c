@@ -124,8 +124,8 @@ void rx_cmd_calibration_mode_rw(uint8_t *buf, uint8_t *info)
 
 void rx_multi_cmd_calibration_mode_rw(uint8_t *msgBuf, MultiPacketInfo *mInfo, uint8_t *responseBuf, uint16_t* responseLen)
 {
-	uint8_t response = handleCalibrationMessage(msgBuf);
-	tx_cmd_calibration_mode_rw(responseBuf, &cmdCode, &cmdType, responseLen, response);
+	handleCalibrationMessage(msgBuf);
+	tx_cmd_calibration_mode_rw(responseBuf, &cmdCode, &cmdType, responseLen, calibrationProgress);
 }
 
 void rx_cmd_calibration_mode_w(uint8_t *buf, uint8_t *info)
