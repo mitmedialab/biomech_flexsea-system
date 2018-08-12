@@ -110,8 +110,8 @@ uint8_t* _rigid_field_pointers[_rigid_numFields] =	{	0,	0,																						
 														PTR2(rigid1.ex.ctrl.current.setpoint_val), PTR2(rigid1.ctrl.step_energy),					// CONTROLLER		2 34
 														PTR2(rigid1.ctrl.walkingState), PTR2(rigid1.ctrl.gaitState),								// CONTROLLER		2 36
 #elif (defined DLEG_MULTIPACKET)
-														PTR2(act1.intJointAngleDegrees), PTR2(act.intJointVelDegrees), PTR2(intJointTorque),		// INT ACTUATOR		3 31
-														PTR2(act.safetyFlag)																		// ACTUATOR			1 32
+														PTR2(act1.intJointAngleDegrees), PTR2(act1.intJointVelDegrees), PTR2(act1.intJointTorque),	// INT ACTUATOR		3 31
+														PTR2(act1.safetyFlag)																		// ACTUATOR			1 32
 
 #endif
 };
