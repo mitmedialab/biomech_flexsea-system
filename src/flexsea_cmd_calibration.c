@@ -32,6 +32,8 @@
 #include <flexsea.h>
 #include "flexsea_system.h"
 #include <flexsea_board.h>
+#include "user-mn-MIT-DLeg.h"
+#include "state_variables.h"
 
 #ifdef __cplusplus
 extern "C" {
