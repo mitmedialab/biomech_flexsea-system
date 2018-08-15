@@ -42,6 +42,8 @@ extern "C" {
 
 #if((defined BOARD_TYPE_FLEXSEA_EXECUTE) || (defined BOARD_TYPE_FLEXSEA_MANAGE))
 	#include "calibration_tools.h"
+#else
+	uint8_t calibrationProgress;
 #endif
 
 #ifdef BOARD_TYPE_FLEXSEA_EXECUTE
@@ -76,7 +78,6 @@ void tx_cmd_calibration_mode_r(uint8_t *shBuf, uint8_t *cmd, uint8_t *cmdType, \
 	shBuf[index++] = calibrationMode;
 
 	(*len) = index;
-	(void)shBuf;
 }
 
 void tx_cmd_calibration_mode_rw(uint8_t *shBuf, uint8_t *cmd, uint8_t *cmdType, \
