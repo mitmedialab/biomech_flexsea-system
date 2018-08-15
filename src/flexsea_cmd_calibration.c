@@ -34,7 +34,6 @@
 #include <flexsea_board.h>
 #include "user-mn-MIT-DLeg.h"
 #include "state_variables.h"
-#include "ui.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -44,6 +43,7 @@ extern "C" {
 	#include "calibration_tools.h"
 #else
 	uint8_t calibrationProgress;
+	#define CALIB_DONE 3
 #endif
 
 #ifdef BOARD_TYPE_FLEXSEA_EXECUTE
