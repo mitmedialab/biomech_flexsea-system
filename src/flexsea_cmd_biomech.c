@@ -76,8 +76,8 @@ void tx_cmd_biomech_r(uint8_t *shBuf, uint8_t *cmd, uint8_t *cmdType, \
 
 	shBuf[index++] = subcmd; //replace this with biomech subflags
 //	SPLIT_16((int16_t) (act->tauDes*INT_SCALING), shBuf, &index);
-	SPLIT_16(((int16_t) (act->desiredJointAngleDeg*INT_SCALING)), shBuf, &index);
-	SPLIT_16(((int16_t) (act->desiredJointK*INT_SCALING)), shBuf, &index);
+	SPLIT_16((int16_t) (act->desiredJointAngleDeg_f*INT_SCALING), shBuf, &index);
+	SPLIT_16((uint16_t) (act->desiredJointK_f*INT_SCALING), shBuf, &index);
 	(*len) = index;
 }
 
@@ -103,8 +103,8 @@ void tx_cmd_biomech_w(uint8_t *shBuf, uint8_t *cmd, uint8_t *cmdType, \
 
 	shBuf[index++] = subcmd;
 //	SPLIT_16((int16_t) (act->tauDes*INT_SCALING), shBuf, &index);
-	SPLIT_16(((int16_t) (act->desiredJointAngleDeg*INT_SCALING)), shBuf, &index);
-	SPLIT_16(((uint16_t) (act->desiredJointK*INT_SCALING)), shBuf, &index);
+	SPLIT_16((int16_t) (act->desiredJointAngleDeg_f*INT_SCALING), shBuf, &index);
+	SPLIT_16((uint16_t) (act->desiredJointK_f*INT_SCALING), shBuf, &index);
 
 	(*len) = index;
 }
@@ -124,8 +124,8 @@ void rx_cmd_biomech_r(uint8_t *msgBuf, MultiPacketInfo *info, uint8_t *responseB
 	uint16_t raw_desiredJointK = REBUILD_UINT16(msgBuf, &index);
 
 //	act1.tauDes = (*(float*) &rawTau)/INT_SCALING;
-	act1.desiredJointAngleDeg_f = (float) (raw_desiredJointAngleDeg/INT_SCALING);
-	act1.desiredJointK_f = (float) (raw_desiredJointK/INT_SCALING);
+	act1.desiredJointAngleDeg_f = (*(float*) &raw_desiredJointAngleDeg)/INT_SCALING;
+	act1.desiredJointK_f = (*(float*) &raw_desiredJointK)/INT_SCALING;
 
 	//set motors off by default
 	act1.motorOnFlag = 0;
@@ -189,8 +189,8 @@ void rx_cmd_biomech_w(uint8_t *msgBuf, MultiPacketInfo *info, uint8_t *responseB
 	uint16_t raw_desiredJointK = REBUILD_UINT16(msgBuf, &index);
 
 //	act1.tauDes = (*(float*) &rawTau)/INT_SCALING;
-	act1.desiredJointAngleDeg_f = (float) (raw_desiredJointAngleDeg/INT_SCALING);
-	act1.desiredJointK_f = (float) (raw_desiredJointK/INT_SCALING);
+	act1.desiredJointAngleDeg_f = (*(float*) &raw_desiredJointAngleDeg)/INT_SCALING;
+	act1.desiredJointK_f = (*(float*) &raw_desiredJointK)/INT_SCALING;
 
 	act1.motorOnFlag = 1; //turn motor flag on or off. This is flipped to 0 in safetyLimit() if comms drop.
 	act1.commandTimer = 0;
