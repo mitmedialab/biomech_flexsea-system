@@ -112,7 +112,7 @@ uint8_t* _rigid_field_pointers[_rigid_numFields] =	{	(uint8_t*) &board_id,	(uint
 														PTR2(rigid1.ctrl.walkingState), PTR2(rigid1.ctrl.gaitState),								// CONTROLLER		2 36
 #elif (defined DLEG_MULTIPACKET)
 														PTR2(act1.intJointAngleDegrees), PTR2(act1.intJointVelDegrees), PTR2(act1.intJointTorque),	// INT ACTUATOR		3 31
-														PTR2(act1.safetyFlag)																		// ACTUATOR			1 32
+														PTR2(act1.safetyFlag), PTR2(act1.desiredJointAngleDeg), PTR2(act1.desiredJointK)			// ACTUATOR			3 34												// ACTUATOR			1 32
 
 #endif
 };

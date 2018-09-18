@@ -76,8 +76,8 @@ void tx_cmd_biomech_r(uint8_t *shBuf, uint8_t *cmd, uint8_t *cmdType, \
 
 	shBuf[index++] = subcmd; //replace this with biomech subflags
 //	SPLIT_16((int16_t) (act->tauDes*INT_SCALING), shBuf, &index);
-	SPLIT_16(((int16_t) (act->desiredAngleDegrees*INT_SCALING)), shBuf, &index);
-	SPLIT_16(((int16_t) (act->desiredK*INT_SCALING)), shBuf, &index);
+	SPLIT_16(((int16_t) (act->desiredJointAngleDeg*INT_SCALING)), shBuf, &index);
+	SPLIT_16(((int16_t) (act->desiredJointK*INT_SCALING)), shBuf, &index);
 	(*len) = index;
 }
 
@@ -103,8 +103,8 @@ void tx_cmd_biomech_w(uint8_t *shBuf, uint8_t *cmd, uint8_t *cmdType, \
 
 	shBuf[index++] = subcmd;
 //	SPLIT_16((int16_t) (act->tauDes*INT_SCALING), shBuf, &index);
-	SPLIT_16(((int16_t) (act->desiredAngleDegrees*INT_SCALING)), shBuf, &index);
-	SPLIT_16(((uint16_t) (act->desiredK*INT_SCALING)), shBuf, &index);
+	SPLIT_16(((int16_t) (act->desiredJointAngleDeg*INT_SCALING)), shBuf, &index);
+	SPLIT_16(((uint16_t) (act->desiredJointK*INT_SCALING)), shBuf, &index);
 
 	(*len) = index;
 }
@@ -120,12 +120,12 @@ void rx_cmd_biomech_r(uint8_t *msgBuf, MultiPacketInfo *info, uint8_t *responseB
 	uint16_t index = 0;
 	uint8_t subcmd = msgBuf[index++];
 //	uint16_t rawTau = REBUILD_UINT16(msgBuf, &index);
-	int16_t raw_desiredAngleDegrees = REBUILD_INT16(msgBuf, &index);
-	uint16_t raw_desiredK = REBUILD_UINT16(msgBuf, &index);
+	int16_t raw_desiredJointAngleDeg = (int16_t) REBUILD_UINT16(msgBuf, &index);
+	uint16_t raw_desiredJointK = REBUILD_UINT16(msgBuf, &index);
 
 //	act1.tauDes = (*(float*) &rawTau)/INT_SCALING;
-	act1.desiredAngleDegrees = (float) (raw_desiredAngleDegrees/INT_SCALING.);
-	act1.desiredK = (float) (raw_desiredK/INT_SCALING.);
+	act1.desiredJointAngleDeg_f = (float) (raw_desiredJointAngleDeg/INT_SCALING);
+	act1.desiredJointK_f = (float) (raw_desiredJointK/INT_SCALING);
 
 	//set motors off by default
 	act1.motorOnFlag = 0;
@@ -185,12 +185,12 @@ void rx_cmd_biomech_w(uint8_t *msgBuf, MultiPacketInfo *info, uint8_t *responseB
 
 	uint8_t subcmd = msgBuf[index++];
 //	uint16_t rawTau = REBUILD_UINT16(msgBuf, &index);
-	int16_t raw_desiredAngleDegrees = REBUILD_INT16(msgBuf, &index);
-	uint16_t raw_desiredK = REBUILD_UINT16(msgBuf, &index);
+	int16_t raw_desiredJointAngleDeg = (int16_t) REBUILD_UINT16(msgBuf, &index);
+	uint16_t raw_desiredJointK = REBUILD_UINT16(msgBuf, &index);
 
 //	act1.tauDes = (*(float*) &rawTau)/INT_SCALING;
-	act1.desiredAngleDegrees = (float) (raw_desiredAngleDegrees/INT_SCALING.);
-	act1.desiredK = (float) (raw_desiredK/INT_SCALING.);
+	act1.desiredJointAngleDeg_f = (float) (raw_desiredJointAngleDeg/INT_SCALING);
+	act1.desiredJointK_f = (float) (raw_desiredJointK/INT_SCALING);
 
 	act1.motorOnFlag = 1; //turn motor flag on or off. This is flipped to 0 in safetyLimit() if comms drop.
 	act1.commandTimer = 0;
