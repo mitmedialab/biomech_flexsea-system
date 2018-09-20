@@ -78,7 +78,7 @@ const uint8_t _rigid_field_formats[_rigid_numFields] =	{FORMAT_8U, 	FORMAT_8U,		
 #elif (defined DLEG_MULTIPACKET)
 
 														FORMAT_16S, FORMAT_16S, FORMAT_16S,											// INT ACTUATOR		3 31
-														FORMAT_8U, FORMAT_16S, FORMAT_16U											// ACTUATOR			3 34
+														FORMAT_8S, FORMAT_16S, FORMAT_16U											// ACTUATOR			3 34
 #endif
 };
 

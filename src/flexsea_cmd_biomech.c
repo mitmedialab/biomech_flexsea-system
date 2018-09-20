@@ -127,6 +127,10 @@ void rx_cmd_biomech_r(uint8_t *msgBuf, MultiPacketInfo *info, uint8_t *responseB
 	act1.desiredJointAngleDeg_f = (*(float*) &raw_desiredJointAngleDeg)/INT_SCALING;
 	act1.desiredJointK_f = (*(float*) &raw_desiredJointK)/INT_SCALING;
 
+	//populate return datafields (ints)
+	act1.desiredJointAngleDeg = raw_desiredJointAngleDeg;
+	act1.desiredJointK = raw_desiredJointK;
+
 	//set motors off by default
 	act1.motorOnFlag = 0;
 	act1.commandTimer = 0;
@@ -191,6 +195,10 @@ void rx_cmd_biomech_w(uint8_t *msgBuf, MultiPacketInfo *info, uint8_t *responseB
 //	act1.tauDes = (*(float*) &rawTau)/INT_SCALING;
 	act1.desiredJointAngleDeg_f = (*(float*) &raw_desiredJointAngleDeg)/INT_SCALING;
 	act1.desiredJointK_f = (*(float*) &raw_desiredJointK)/INT_SCALING;
+
+	//populate return datafields (ints)
+	act1.desiredJointAngleDeg = raw_desiredJointAngleDeg;
+	act1.desiredJointK = raw_desiredJointK;
 
 	act1.motorOnFlag = 1; //turn motor flag on or off. This is flipped to 0 in safetyLimit() if comms drop.
 	act1.commandTimer = 0;
