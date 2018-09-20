@@ -67,17 +67,15 @@ void init_flexsea_payload_ptr_biomech(void) {
 */
 
 void tx_cmd_biomech_r(uint8_t *shBuf, uint8_t *cmd, uint8_t *cmdType, \
-						uint16_t *len, uint8_t subcmd, Act_s* act) {
+						uint16_t *len, uint8_t subcmd, float desiredJointAngleDeg_f, float desiredJointK_f) {
 
 	uint16_t index = 0;
 	(*cmd) = CMD_BIOMECH;
 	(*cmdType) = CMD_READ;
 
-
 	shBuf[index++] = subcmd; //replace this with biomech subflags
-//	SPLIT_16((int16_t) (act->tauDes*INT_SCALING), shBuf, &index);
-	SPLIT_16((int16_t) (act->desiredJointAngleDeg_f*INT_SCALING), shBuf, &index);
-	SPLIT_16((uint16_t) (act->desiredJointK_f*INT_SCALING), shBuf, &index);
+	SPLIT_16((int16_t) (desiredJointAngleDeg_f*INT_SCALING), shBuf, &index);
+	SPLIT_16((uint16_t) (desiredJointK_f*INT_SCALING), shBuf, &index);
 	(*len) = index;
 }
 
@@ -85,7 +83,7 @@ void tx_cmd_biomech_r(uint8_t *shBuf, uint8_t *cmd, uint8_t *cmdType, \
 */
 
 void tx_cmd_biomech_w(uint8_t *shBuf, uint8_t *cmd, uint8_t *cmdType, \
-						uint16_t *len, uint32_t *flags, uint8_t lenFlags, uint8_t subcmd, Act_s* act)
+						uint16_t *len, uint32_t *flags, uint8_t lenFlags, uint8_t subcmd,  float desiredJointAngleDeg_f, float desiredJointK_f)
 {
 
 	uint16_t index = 0;
@@ -102,9 +100,8 @@ void tx_cmd_biomech_w(uint8_t *shBuf, uint8_t *cmd, uint8_t *cmdType, \
 		SPLIT_32(flags[i++], shBuf, &index);
 
 	shBuf[index++] = subcmd;
-//	SPLIT_16((int16_t) (act->tauDes*INT_SCALING), shBuf, &index);
-	SPLIT_16((int16_t) (act->desiredJointAngleDeg_f*INT_SCALING), shBuf, &index);
-	SPLIT_16((uint16_t) (act->desiredJointK_f*INT_SCALING), shBuf, &index);
+	SPLIT_16((int16_t) (desiredJointAngleDeg_f*INT_SCALING), shBuf, &index);
+	SPLIT_16((uint16_t) (desiredJointK_f*INT_SCALING), shBuf, &index);
 
 	(*len) = index;
 }
