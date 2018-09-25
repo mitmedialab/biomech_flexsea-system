@@ -57,9 +57,9 @@ const char* _rigid_fieldlabels[_rigid_numFields] = 		{"board id", 			"devId",			
 
 #elif (defined DLEG_MULTIPACKET)
 														"intJointAngleDegrees", "intJointVelDegrees", "intJointTorque",				// INT ACTUATOR		3 31
-														"safetyFlag", "desiredJointAngleDeg", "desiredJointK", "desiredJointB"		// ACTUATOR			4 35
+														"safetyFlag", "desiredJointAngleDeg", "desiredJointK", "desiredJointB",		// ACTUATOR			4 35
 														"emg_0", "emg_1", "emg_2", "emg_3", "emg_4",								// EMG				5 40
-														"emg_5", "emg_6", "emg_7"													// EMG				3 42
+														"emg_5", "emg_6", "emg_7"													// EMG				3 43
 
 #endif
 };
@@ -120,7 +120,7 @@ uint8_t* _rigid_field_pointers[_rigid_numFields] =	{	(uint8_t*) &board_id,	(uint
 														PTR2(act1.intJointAngleDegrees), PTR2(act1.intJointVelDegrees), PTR2(act1.intJointTorque),	// INT ACTUATOR		3 31
 														PTR2(act1.safetyFlag), PTR2(act1.desiredJointAngleDeg), PTR2(act1.desiredJointK) , PTR2(act1.desiredJointB),	// ACTUATOR			4 35
 														PTR2(emg_data[0]), PTR2(emg_data[1]), PTR2(emg_data[2]), PTR2(emg_data[3]), PTR2(emg_data[4]),	// EMG				5 40
-														PTR2(emg_data[5]), PTR2(emg_data[6]), PTR2(emg_data[7])										// EMG				3 42
+														PTR2(emg_data[5]), PTR2(emg_data[6]), PTR2(emg_data[7])										// EMG				3 43
 #endif
 };
 
