@@ -123,10 +123,10 @@ void rx_cmd_biomech_r(uint8_t *msgBuf, MultiPacketInfo *info, uint8_t *responseB
 	uint16_t raw_desiredJointK = REBUILD_UINT16(msgBuf, &index);
 	uint16_t raw_desiredJointB = REBUILD_UINT16(msgBuf, &index);
 
-//	act1.tauDes = (*(float*) &rawTau)/INT_SCALING;
-	act1.desiredJointAngleDeg_f = (*(float*) &raw_desiredJointAngleDeg)/INT_SCALING;
-	act1.desiredJointK_f = (*(float*) &raw_desiredJointK)/INT_SCALING;
-	act1.desiredJointB_f = (*(float*) &raw_desiredJointB)/INT_SCALING;
+//	act1.tauDes = ((float) rawTau)/INT_SCALING;
+	act1.desiredJointAngleDeg_f = ((float) raw_desiredJointAngleDeg)/INT_SCALING;
+	act1.desiredJointK_f = ((float) raw_desiredJointK)/INT_SCALING;
+	act1.desiredJointB_f = ((float) raw_desiredJointB)/INT_SCALING;
 
 	//populate return datafields (ints)
 	act1.desiredJointAngleDeg = raw_desiredJointAngleDeg;
@@ -195,10 +195,10 @@ void rx_cmd_biomech_w(uint8_t *msgBuf, MultiPacketInfo *info, uint8_t *responseB
 	uint16_t raw_desiredJointK = REBUILD_UINT16(msgBuf, &index);
 	uint16_t raw_desiredJointB = REBUILD_UINT16(msgBuf, &index);
 
-//	act1.tauDes = (*(float*) &rawTau)/INT_SCALING;
-	act1.desiredJointAngleDeg_f = (*(float*) &raw_desiredJointAngleDeg)/INT_SCALING;
-	act1.desiredJointK_f = (*(float*) &raw_desiredJointK)/INT_SCALING;
-	act1.desiredJointB_f = (*(float*) &raw_desiredJointB)/INT_SCALING;
+//	act1.tauDes = ((float) rawTau)/INT_SCALING;
+	act1.desiredJointAngleDeg_f = ((float) raw_desiredJointAngleDeg)/INT_SCALING;
+	act1.desiredJointK_f = ((float) raw_desiredJointK)/INT_SCALING;
+	act1.desiredJointB_f = ((float) raw_desiredJointB)/INT_SCALING;
 
 	//populate return datafields (ints)
 	act1.desiredJointAngleDeg = raw_desiredJointAngleDeg;
