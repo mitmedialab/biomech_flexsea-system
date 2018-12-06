@@ -9,7 +9,7 @@ extern "C" {
 #include "string.h"
 #include "flexsea_user_structs.h"
 #include "flexsea_board.h"
-#include "user-mn-MIT-DLeg.h"
+#include "user-mn-MIT-DLeg-2dof.h"
 #include "user-mn-MIT-EMG.h"
 
 #define IS_FIELD_HIGH(i, map) ( (map)[(i)/32] & (1 << ((i)%32)) )
