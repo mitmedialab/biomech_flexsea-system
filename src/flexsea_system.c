@@ -138,6 +138,9 @@ void init_flexsea_payload_ptr(void)
 
 	//User functions:
 	init_flexsea_payload_ptr_user();
+
+	init_flexsea_payload_ptr_biomech(); //custom commands for multidof dleg
+
 }
 
 //Catch all function - does nothing. Note: error catching code can be added here

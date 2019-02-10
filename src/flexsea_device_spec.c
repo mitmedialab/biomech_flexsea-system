@@ -18,6 +18,7 @@ extern "C" {
 #include "string.h"
 #include "flexsea_user_structs.h"
 #include "flexsea_board.h"
+#include "stm32f427xx.h"
 
 #define IS_FIELD_HIGH(i, map) ( (map)[(i)/32] & (1 << ((i)%32)) )
 #define SET_MAP_HIGH(i, map) ( (map)[(i)/32] |= (1 << ((i)%32)) )
@@ -46,10 +47,16 @@ const char* _rigid_fieldlabels[_rigid_mn_numFields] = 	{"rigid", 			"id",							
 														"genvar_0", "genvar_1", "genvar_2", "genvar_3", "genvar_4", 				// GEN VARS			5 23
 														"genvar_5", "genvar_6", "genvar_7", "genvar_8", "genvar_9", 				// GEN VARS			5 28
 														"ank_ang", "ank_vel", 														// ANKLE			2 30
-//#ifdef DEPHY
+#ifdef DEPHY
 														"ank_from_mot", "ank_torque",												// ANKLE			4 32
 														"cur_stpt",	"step_energy", "walking_state", "gait_state" 					// CONTROLLER		4 36
-//#endif
+#elif (defined DLEG_MULTIPACKET)
+														"intJointAngleDegrees", "intJointVelDegrees", "intJointTorque",				// INT ACTUATOR		3 31
+														"safetyFlag", "desiredJointAngleDeg", "desiredJointK", "desiredJointB",		// ACTUATOR			4 35
+														"emg_0", "emg_1", "emg_2", "emg_3", "emg_4",								// EMG				5 40
+														"emg_5", "emg_6", "emg_7"													// EMG				3 43
+
+#endif
 };
 
 const uint8_t _rigid_field_formats[_rigid_mn_numFields] =	{FORMAT_8U, 	FORMAT_16U,													// METADATA			2 2
@@ -63,10 +70,16 @@ const uint8_t _rigid_field_formats[_rigid_mn_numFields] =	{FORMAT_8U, 	FORMAT_16
 														FORMAT_16S, FORMAT_16S, FORMAT_16S, FORMAT_16S, FORMAT_16S,					// GEN VARS			5 23
 														FORMAT_16S, FORMAT_16S, FORMAT_16S, FORMAT_16S, FORMAT_16S,					// GEN VARS			5 28
 														FORMAT_16S, FORMAT_16S, 													// ANKLE			2 30
-//#ifdef DEPHY
+#ifdef DEPHY
 														FORMAT_16S,	FORMAT_16S, 													// ANKLE			2 32
 														FORMAT_32S, FORMAT_16S, FORMAT_8S, FORMAT_8S								// CONTROLLER		4 36
-//#endif
+#elif (defined DLEG_MULTIPACKET)
+
+														FORMAT_16S, FORMAT_16S, FORMAT_16S,											// INT ACTUATOR		3 31
+														FORMAT_8S, FORMAT_16S, FORMAT_16U, FORMAT_16U,								// ACTUATOR			4 35
+														FORMAT_16S, FORMAT_16S, FORMAT_16S, FORMAT_16S, FORMAT_16S,					// EMG				5 40
+														FORMAT_16S, FORMAT_16S, FORMAT_16S											// EMG				3 43
+#endif
 };
 
 FlexseaDeviceSpec fx_rigid_spec = {
@@ -80,9 +93,10 @@ FlexseaDeviceSpec fx_rigid_spec = {
 #if((defined BOARD_TYPE_FLEXSEA_MANAGE  && defined BOARD_SUBTYPE_RIGID && HW_VER < 10))
 
 #define PTR2(x) (uint8_t*)&(x)
+#define UIDPTR(o) (uint8_t*)(0x1FFF7A10U + o)
 
 // only defined on boards not on plan
-uint8_t* _rigid_field_pointers[_rigid_mn_numFields] =	{	0,	0,																						// METADATA			2 2
+uint8_t* _rigid_field_pointers[_rigid_mn_numFields] =	{(uint8_t*) &board_id,	(uint8_t*) &((uint8_t*)(UID_BASE))[2],																						// METADATA			2 2
 														PTR2(rigid1.ctrl.timestamp),																// STATE TIME		1 3
 														(uint8_t*)&rigid1.mn.accel.x, (uint8_t*)&rigid1.mn.accel.y, (uint8_t*)&rigid1.mn.accel.z,	// IMU				3 6
 														(uint8_t*)&rigid1.mn.gyro.x, (uint8_t*)&rigid1.mn.gyro.y, (uint8_t*)&rigid1.mn.gyro.z,		// IMU 				3 9
@@ -97,6 +111,11 @@ uint8_t* _rigid_field_pointers[_rigid_mn_numFields] =	{	0,	0,																			
 														(uint8_t*)(rigid1.mn.genVar+8), (uint8_t*)(rigid1.mn.genVar+9),								// GEN VARS			10 28
 #ifdef DEPHY
 														PTR2(rigid1.ctrl._ank_ang_deg_), PTR2(rigid1.ctrl._ank_vel_), 								// ANKLE			2 30
+#elif (defined DLEG_MULTIPACKET)
+														PTR2(act1.intJointAngleDegrees), PTR2(act1.intJointVelDegrees), PTR2(act1.intJointTorque),	// INT ACTUATOR		3 31
+														PTR2(act1.safetyFlag), PTR2(act1.desiredJointAngleDeg), PTR2(act1.desiredJointK) , PTR2(act1.desiredJointB),	// ACTUATOR			4 35
+														PTR2(emg_data[0]), PTR2(emg_data[1]), PTR2(emg_data[2]), PTR2(emg_data[3]), PTR2(emg_data[4]),	// EMG				5 40
+														PTR2(emg_data[5]), PTR2(emg_data[6]), PTR2(emg_data[7])										// EMG				3 43
 #else
 														PTR2(rigid1.ex._joint_ang_), PTR2(rigid1.ex._joint_ang_vel_),
 #endif
