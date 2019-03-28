@@ -105,6 +105,7 @@ void tx_cmd_calibration_mode_rw(uint8_t *shBuf, uint8_t *cmd, uint8_t *cmdType, 
 
 	//Data:
 	shBuf[index++] = calibrationMode;
+	shBuf[index++] = getDeviceId();
 	if(calibrationMode & CALIBRATION_UVLO)
 	{
 		SPLIT_16(getUVLO(), shBuf, &index);
@@ -200,9 +201,13 @@ void rx_cmd_calibration_mode_rw(uint8_t *buf, uint8_t *info)
 
 void rx_multi_cmd_calibration_mode_rw(uint8_t *msgBuf, MultiPacketInfo *mInfo, uint8_t *responseBuf, uint16_t* responseLen)
 {
-	uint8_t response = handleCalibrationMessage(msgBuf, 0);
-	response = msgBuf[0];
-	tx_cmd_calibration_mode_rw(responseBuf, &cmdCode, &cmdType, responseLen, response);
+	if (!(calibrationProgress == CALIB_DONE)) {
+		uint8_t response = handleCalibrationMessage(msgBuf, 1);
+		response = msgBuf[0];
+		tx_cmd_calibration_mode_rw(responseBuf, &cmdCode, &cmdType, responseLen, calibrationProgress);
+	} else {
+		tx_cmd_calibration_mode_rw(responseBuf, &cmdCode, &cmdType, responseLen, calibrationProgress);
+	}
 }
 
 void rx_cmd_calibration_mode_w(uint8_t *buf, uint8_t *info)
