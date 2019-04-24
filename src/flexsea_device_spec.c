@@ -96,7 +96,7 @@ FlexseaDeviceSpec fx_rigid_spec = {
 #define UIDPTR(o) (uint8_t*)(0x1FFF7A10U + o)
 
 // only defined on boards not on plan
-uint8_t* _rigid_field_pointers[_rigid_mn_numFields] =	{(uint8_t*) &board_id,	(uint8_t*) &((uint8_t*)(UID_BASE))[2],																						// METADATA			2 2
+uint8_t* _rigid_field_pointers[_rigid_mn_numFields] =	{(uint8_t*) &board_id,	(uint8_t*) &((uint8_t*)(UID_BASE))[0],																						// METADATA			2 2
 														PTR2(rigid1.ctrl.timestamp),																// STATE TIME		1 3
 														(uint8_t*)&rigid1.mn.accel.x, (uint8_t*)&rigid1.mn.accel.y, (uint8_t*)&rigid1.mn.accel.z,	// IMU				3 6
 														(uint8_t*)&rigid1.mn.gyro.x, (uint8_t*)&rigid1.mn.gyro.y, (uint8_t*)&rigid1.mn.gyro.z,		// IMU 				3 9
