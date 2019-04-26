@@ -41,7 +41,7 @@ extern "C" {
 #include <stdio.h>
 #include <stdlib.h>
 #include <flexsea_system.h>
-#include "../../biomech_flexsea-comm/inc/flexsea.h"	//dependency: flexsea-comm
+#include "../../flexsea-comm/inc/flexsea.h"	//dependency: flexsea-comm
 #include <flexsea_board.h>
 
 //Plan boards only:

@@ -49,8 +49,8 @@ For rx_* functions, the suffix options are:
 //****************************************************************************
 
 #include <string.h>
-#include "../../biomech_flexsea-comm/inc/flexsea.h"	//dependency: flexsea-comm
-#include "../../biomech_flexsea-comm/inc/flexsea_payload.h"	//dependency: flexsea-comm
+#include "../../flexsea-comm/inc/flexsea.h"	//dependency: flexsea-comm
+#include "../../flexsea-comm/inc/flexsea_payload.h"	//dependency: flexsea-comm
 #include <flexsea_cmd_stream.h>
 #include <flexsea_system.h>
 #include <flexsea_board.h>
