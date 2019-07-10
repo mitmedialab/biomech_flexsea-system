@@ -236,6 +236,7 @@ void tx_cmd_biomech_rr(uint8_t *responseBuf, uint16_t* responseLen, uint8_t subc
 			dest[j] = read_device_active_field_pointers[i][j];
 
 		dest = dest + read_device_active_field_lengths[i];
+
 	}
 
 	*responseLen = dest - responseBuf;
