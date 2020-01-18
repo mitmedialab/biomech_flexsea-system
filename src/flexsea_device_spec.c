@@ -52,15 +52,15 @@ const char* _rigid_fieldlabels[_rigid_mn_numFields] = 	{"rigid", 			"id",							
 														"ank_from_mot", "ank_torque",												// ANKLE			4 32
 														"cur_stpt",	"step_energy", "walking_state", "gait_state" 					// CONTROLLER		4 36
 #elif defined DLEG_MULTIPACKET
-														"intJointAngleDegrees", "intJointVelDegrees", "intJointTorque",				// INT ACTUATOR		3 31
-														"safetyFlag", "desiredJointAngleDeg", "desiredJointK", "desiredJointB",		// ACTUATOR			4 35
+														"intJointAngleDegrees", "intCrankVel", "intJointTorque",					// INT ACTUATOR		3 31
+														"intTauDes", "desiredJointAngleDeg", "desiredJointK", "desiredJointB",		// ACTUATOR			4 35
 														"emg_0", "emg_1", "emg_2", "emg_3", "emg_4",								// EMG				5 40
-														"emg_5", "emg_6", "emg_7"													// EMG				3 43
-
+														"emg_5", "emg_6", "emg_7", 													// EMG				3 43
+														"intCrankAngleDegrees", "axialForce"										// 2dof ankle 		2 45
 #endif
 };
 
-const uint8_t _rigid_field_formats[_rigid_mn_numFields] =	{FORMAT_8U, 	FORMAT_8U,													// METADATA			2 2
+const uint8_t _rigid_field_formats[_rigid_mn_numFields] =	{FORMAT_8U, 	FORMAT_8U,												// METADATA			2 2
 														FORMAT_32U,																	// STATE TIME		1 3
 														FORMAT_16S, FORMAT_16S, FORMAT_16S, FORMAT_16S, FORMAT_16S, FORMAT_16S ,	// IMU				6 9
 
@@ -75,10 +75,11 @@ const uint8_t _rigid_field_formats[_rigid_mn_numFields] =	{FORMAT_8U, 	FORMAT_8U
 														FORMAT_32S, FORMAT_16S, FORMAT_8S, FORMAT_8S								// CONTROLLER		4 36
 #elif defined DLEG_MULTIPACKET
 
-														FORMAT_16S, FORMAT_16S, FORMAT_16S,											// INT ACTUATOR		3 31
-														FORMAT_8S, FORMAT_16S, FORMAT_16U, FORMAT_16U,								// ACTUATOR			4 35
+														FORMAT_16S, FORMAT_32S, FORMAT_16S,											// INT ACTUATOR		3 31
+														FORMAT_16S, FORMAT_16S, FORMAT_16U, FORMAT_16U,								// ACTUATOR			4 35
 														FORMAT_16S, FORMAT_16S, FORMAT_16S, FORMAT_16S, FORMAT_16S,					// EMG				5 40
-														FORMAT_16S, FORMAT_16S, FORMAT_16S											// EMG				3 43
+														FORMAT_16S, FORMAT_16S, FORMAT_16S, 										// EMG				3 43
+														FORMAT_16S, FORMAT_32S 														// 2dof ankle		2 45
 #endif
 };
 
@@ -110,10 +111,11 @@ uint8_t* _rigid_field_pointers[_rigid_mn_numFields] =	{(uint8_t*) &board_id,	(ui
 														(uint8_t*)(rigid1.mn.genVar+6), (uint8_t*)(rigid1.mn.genVar+7),								// GEN VARS
 														(uint8_t*)(rigid1.mn.genVar+8), (uint8_t*)(rigid1.mn.genVar+9),								// GEN VARS			10 28
 #ifdef DLEG_MULTIPACKET
-														PTR2(act1.intJointAngleDegrees), PTR2(act1.intJointVelDegrees), PTR2(act1.intJointTorque),	// INT ACTUATOR		3 31
-														PTR2(act1.safetyFlag), PTR2(act1.desiredJointAngleDeg), PTR2(act1.desiredJointK) , PTR2(act1.desiredJointB),	// ACTUATOR			4 35
+														PTR2(act1.intJointAngleDegrees), PTR2(act1.intCrankVel), PTR2(act1.intJointTorque),			// INT ACTUATOR		3 31
+														PTR2(act1.intTauDes), PTR2(act1.desiredJointAngleDeg), PTR2(act1.desiredJointK) , PTR2(act1.desiredJointB),	// ACTUATOR			4 35
 														PTR2(emgData[0]), PTR2(emgData[1]), PTR2(emgData[2]), PTR2(emgData[3]), PTR2(emgData[4]),	// EMG				5 40
-														PTR2(emgData[5]), PTR2(emgData[6]), PTR2(emgData[7])										// EMG				3 43
+														PTR2(emgData[5]), PTR2(emgData[6]), PTR2(emgData[7]), 									 	// EMG				3 43
+														PTR2(act1.intCrankAngleDegrees), PTR2(act1.axialForce)										// 2dof ankle		2 45
 #endif
 };
 
