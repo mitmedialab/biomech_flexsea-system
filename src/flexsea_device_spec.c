@@ -56,7 +56,9 @@ const char* _rigid_fieldlabels[_rigid_mn_numFields] = 	{"rigid", 			"id",							
 														"intTauDes", "desiredJointAngleDeg", "desiredJointK", "desiredJointB",		// ACTUATOR			4 35
 														"emg_0", "emg_1", "emg_2", "emg_3", "emg_4",								// EMG				5 40
 														"emg_5", "emg_6", "emg_7", 													// EMG				3 43
-														"intCrankAngleDegrees", "axialForce"										// 2dof ankle 		2 45
+														"intCrankAngleDegrees", "axialForce",										// 2dof ankle 		2 45
+														"emg_8", "emg_9", "emg_10", "emg_11", "emg_12",								// EMG v0.3			5 50
+														"emg_13", "emg_14", "emg_15", 												// EMG v0.3			3 53
 #endif
 };
 
@@ -79,7 +81,10 @@ const uint8_t _rigid_field_formats[_rigid_mn_numFields] =	{FORMAT_8U, 	FORMAT_8U
 														FORMAT_16S, FORMAT_16S, FORMAT_16U, FORMAT_16U,								// ACTUATOR			4 35
 														FORMAT_16S, FORMAT_16S, FORMAT_16S, FORMAT_16S, FORMAT_16S,					// EMG				5 40
 														FORMAT_16S, FORMAT_16S, FORMAT_16S, 										// EMG				3 43
-														FORMAT_16S, FORMAT_32S 														// 2dof ankle		2 45
+														FORMAT_16S, FORMAT_32S, 													// 2dof ankle		2 45
+														FORMAT_16S, FORMAT_16S, FORMAT_16S, FORMAT_16S, FORMAT_16S,					// EMG v0.3			5 50
+														FORMAT_16S, FORMAT_16S, FORMAT_16S,											// EMG v0.3			3 53
+
 #endif
 };
 
@@ -115,7 +120,9 @@ uint8_t* _rigid_field_pointers[_rigid_mn_numFields] =	{(uint8_t*) &board_id,	(ui
 														PTR2(act1.intTauDes), PTR2(act1.desiredJointAngleDeg), PTR2(act1.desiredJointK) , PTR2(act1.desiredJointB),	// ACTUATOR			4 35
 														PTR2(emgData[0]), PTR2(emgData[1]), PTR2(emgData[2]), PTR2(emgData[3]), PTR2(emgData[4]),	// EMG				5 40
 														PTR2(emgData[5]), PTR2(emgData[6]), PTR2(emgData[7]), 									 	// EMG				3 43
-														PTR2(act1.intCrankAngleDegrees), PTR2(act1.axialForce)										// 2dof ankle		2 45
+														PTR2(act1.intCrankAngleDegrees), PTR2(act1.axialForce),										// 2dof ankle		2 45
+														PTR2(emgData[8]), PTR2(emgData[9]), PTR2(emgData[10]), PTR2(emgData[11]), PTR2(emgData[12]),// EMG v0.3 	    5 50
+														PTR2(emgData[13]), PTR2(emgData[14]), PTR2(emgData[15]), 									// EMG v0.3			3 53
 #endif
 };
 
